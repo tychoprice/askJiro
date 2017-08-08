@@ -3,20 +3,25 @@
   <div class="container">
 
     <header class="jumbotron">
-      <h1>this is the spots page</h1>
-      <p>View our spots</p>
-      <p>
-        <a class="btn btn-primary btn-large" href="/spots/new">Add New Spot</a>
-      </p>
+      <div class="container">
+        <h1>askJiro</h1>
+        <p>Find local sushi spots!</p>
+        <p>
+          <a class="btn btn-primary btn-large" href="/spots/new">Add New Spot</a>
+        </p>
+      </div>
     </header>
 
-    <% spots.forEach((spot) => { %>
-      <div>
-        <h4><%= spot.name %></h4>
-        <img src="<%= spot.image %>">
-      </div>
-    <% }); %>
-
+    <div class="row text-center" style="display:flex; flex-wrap: wrap;">
+      <% spots.forEach((spot) => { %>
+        <div class="col-md-3 col-sm-6">
+          <div class="thumbnail">
+            <h4><%= spot.name %></h4>
+            <img src="<%= spot.image %>">
+          </div>
+        </div>
+      <% }); %>
+    </div>
   </div>
 
 <% include partials/footer %>
