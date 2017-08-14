@@ -18,10 +18,12 @@ const Spot = mongoose.model("Spot", spotSchema);
 Spot.create({
   name:  "Ozumo",
   image: "http://www.splashofpretty.com/wp-content/uploads/2012/06/jiro-sushi-5.jpg",
+  description: "The nicest place in the financial district",
 });
 
-app.get("/", function (req, res) {
-  res.render('landing');
+//INDEX
+app.get("/", function(req, res) {
+  res.render('index');
 });
 
 // const spots = [
@@ -30,7 +32,7 @@ app.get("/", function (req, res) {
 //   {name: "Ozumo", image: "http://www.splashofpretty.com/wp-content/uploads/2012/06/jiro-sushi-5.jpg"},
 // ];
 
-app.get("/spots", function (req, res) {
+app.get("/spots", function(req, res) {
   Spot.find({}, function(err, allSpots) {
     if (err) {
       console.log(err);
@@ -40,8 +42,8 @@ app.get("/spots", function (req, res) {
   });
   // res.render('spots', {spots:spots});
 });
-
-app.post("/spots", function (req, res) {
+//
+app.post("/spots", function(req, res) {
   let name = req.body.name;
   let image = req.body.image;
   let newSpot = {name: name, image: image};
@@ -54,8 +56,21 @@ app.post("/spots", function (req, res) {
   });
 });
 
-app.get("/spots/new", function (req, res) {
+// CREATE - takes us to new form
+app.get("/spots/new", function(req, res) {
   res.render("new.ejs");
+});
+
+// SHOW - info about one spot
+app.get("/spots/:id", function(req, res) {
+  Spot.findById(req.params.id, function(err, foundSpot) {
+    if (err) {
+        console.log(err);
+    } else {
+      res.render("show", {spot: foundSpot});
+    }
+  });
+  req.params.id;
 });
 
 app.listen(3000, process.env.IP, function() {
